@@ -51,7 +51,7 @@ Write-Output ">>> APK subido: $($asset.browser_download_url)"
 $versionJson = @{
     latestVersionCode = $newCode
     latestVersionName = $Version
-    downloadUrl = "https://github.com/xlian302/ConvertorPDF/releases/download/$tag/$apkName"
+    downloadUrl = "https://github.com/xlian302/ConvertorPDF/releases/latest/download/$apkName"
     changelog = $Changelog
 } | ConvertTo-Json
 Set-Content "$projDir\version.json" $versionJson
