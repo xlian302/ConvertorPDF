@@ -1,0 +1,13 @@
+-keep class org.apache.poi.** { *; }
+-keep class org.openxmlformats.** { *; }
+-keep class com.microsoft.schemas.** { *; }
+-keep class com.graphbuilder.** { *; }
+
+-dontwarn aQute.bnd.**
+-dontwarn org.apache.poi.**
+-dontwarn org.openxmlformats.**
+-dontwarn com.microsoft.schemas.**
+-dontwarn com.graphbuilder.**
+-dontwarn java.awt.**
+-dontwarn javax.xml.**
+-dontwarn org.w3c.dom.**
