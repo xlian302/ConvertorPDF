@@ -1,0 +1,43 @@
+name: Build APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build release APK
+        run: |
+          echo "storePassword=convertor123" >> local.properties
+          echo "keyPassword=convertor123" >> local.properties
+          echo "keyAlias=convertor_pdf" >> local.properties
+          echo "storeFile=../convertor_pdf.keystore" >> local.properties
+          chmod +x gradlew
+          ./gradlew assembleRelease
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Upload APK to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: app/build/outputs/apk/release/app-release.apk
+          asset_name: ConvertorPDF_${{ steps.get_version.outputs.VERSION }}.apk
+          tag: ${{ github.ref }}
+          overwrite: true
