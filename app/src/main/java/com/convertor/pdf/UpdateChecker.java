@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -32,6 +33,13 @@ public class UpdateChecker {
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setConnectTimeout(10000);
                 conn.setReadTimeout(10000);
+                conn.setRequestProperty("Accept", "application/json");
+
+                int responseCode = conn.getResponseCode();
+                if (responseCode != 200) {
+                    showError(context, "Error de conexion: HTTP " + responseCode);
+                    return;
+                }
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder sb = new StringBuilder();
@@ -46,7 +54,13 @@ public class UpdateChecker {
                 String changelog = json.optString("changelog", "Nueva versión disponible");
 
                 PackageManager pm = context.getPackageManager();
-                int currentCode = pm.getPackageInfo(context.getPackageName(), 0).versionCode;
+                PackageInfo pInfo = pm.getPackageInfo(context.getPackageName(), 0);
+                int currentCode;
+                if (Build.VERSION.SDK_INT >= 28) {
+                    currentCode = (int) pInfo.getLongVersionCode();
+                } else {
+                    currentCode = pInfo.versionCode;
+                }
 
                 if (latestCode > currentCode) {
                     showUpdateDialog(context, latestName, changelog, downloadUrl);
@@ -54,8 +68,15 @@ public class UpdateChecker {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                showError(context, "Error al buscar actualizacion: " + e.getMessage());
             }
         }).start();
+    }
+
+    private static void showError(final Context context, final String message) {
+        ((Activity) context).runOnUiThread(() ->
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        );
     }
 
     private static void showUpdateDialog(final Context context, String version, String changelog, final String downloadUrl) {

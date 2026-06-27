@@ -47,14 +47,15 @@ $uploadHeaders = @{ Authorization = "token $token"; "Content-Type" = "applicatio
 $asset = Invoke-RestMethod -Uri $uploadUrl -Headers $uploadHeaders -Method Post -Body $apkBytes
 Write-Output ">>> APK subido: $($asset.browser_download_url)"
 
-# 7. Update version.json
+# 7. Update version.json with proper UTF-8
 $versionJson = @{
     latestVersionCode = $newCode
     latestVersionName = $Version
     downloadUrl = "https://github.com/xlian302/ConvertorPDF/releases/latest/download/$apkName"
     changelog = $Changelog
-} | ConvertTo-Json
-Set-Content "$projDir\version.json" $versionJson
+}
+$jsonString = $versionJson | ConvertTo-Json
+[System.IO.File]::WriteAllText("$projDir\version.json", $jsonString, [System.Text.Encoding]::UTF8)
 
 # 8. Commit and push version.json update
 git add -A

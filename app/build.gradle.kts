@@ -10,8 +10,8 @@ android {
         applicationId = "com.convertor.pdf"
         minSdk = 26
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 5
+        versionName = "1.4"
         multiDexEnabled = true
     }
 
@@ -68,4 +68,5 @@ dependencies {
     implementation("org.apache.poi:poi-ooxml:5.2.5")
     implementation("org.apache.poi:poi-scratchpad:5.2.5")
 }
+
 
