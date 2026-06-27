@@ -8,25 +8,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.convertor.pdf.R;
 import com.convertor.pdf.converter.PdfGenerator;
-import com.convertor.pdf.utils.FileUtils;
 import com.convertor.pdf.utils.ImageFilters;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +41,8 @@ public class ImageEditActivity extends AppCompatActivity {
     private ImageAdapter adapter;
     private List<ImageItem> images = new ArrayList<>();
     private int selectedIndex = -1;
-    private String currentFilter = "original";
 
-    static class ImageItem {
+    public static class ImageItem {
         Uri uri;
         Bitmap originalBitmap;
         Bitmap displayBitmap;
@@ -170,8 +165,6 @@ public class ImageEditActivity extends AppCompatActivity {
                 selectImage(Math.min(selectedIndex, images.size() - 1));
             }
         });
-
-        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void selectImage(int index) {
@@ -206,7 +199,6 @@ public class ImageEditActivity extends AppCompatActivity {
         if (selectedIndex < 0) return;
         ImageItem item = images.get(selectedIndex);
         item.filter = filter;
-        currentFilter = filter;
         updatePreview(item);
     }
 
@@ -217,15 +209,14 @@ public class ImageEditActivity extends AppCompatActivity {
         ImageView cropImageView = cropView.findViewById(R.id.crop_image_view);
         cropImageView.setImageBitmap(item.originalBitmap);
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
             .setTitle("Recortar imagen")
             .setView(cropView)
             .setPositiveButton("Aceptar", (d, which) -> {
-                Toast.makeText(this, "Arrastra para recortar (función básica)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Arrastra para recortar (funcion basica)", Toast.LENGTH_SHORT).show();
             })
             .setNegativeButton("Cancelar", null)
-            .create();
-        dialog.show();
+            .show();
     }
 
     private void createPdf() {

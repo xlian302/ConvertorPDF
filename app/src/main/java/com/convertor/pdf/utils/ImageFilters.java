@@ -4,16 +4,24 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 public class ImageFilters {
 
-    public static Bitmap applyOriginal(Bitmap source) {
-        return source;
+    public static Bitmap rotateBitmap(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+    }
+
+    public static Bitmap cropBitmap(Bitmap source, Rect rect) {
+        return Bitmap.createBitmap(source, rect.left, rect.top, rect.width(), rect.height());
     }
 
     public static Bitmap applyGrayscale(Bitmap source) {
-        Bitmap result = source.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), source.getConfig() != null ? source.getConfig() : Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
         ColorMatrix cm = new ColorMatrix();
@@ -24,7 +32,7 @@ public class ImageFilters {
     }
 
     public static Bitmap applySepia(Bitmap source) {
-        Bitmap result = source.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), source.getConfig() != null ? source.getConfig() : Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
         ColorMatrix cm = new ColorMatrix(new float[]{
@@ -39,7 +47,7 @@ public class ImageFilters {
     }
 
     public static Bitmap applyInvert(Bitmap source) {
-        Bitmap result = source.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), source.getConfig() != null ? source.getConfig() : Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
         ColorMatrix cm = new ColorMatrix(new float[]{
@@ -51,35 +59,5 @@ public class ImageFilters {
         paint.setColorFilter(new ColorMatrixColorFilter(cm));
         canvas.drawBitmap(source, 0, 0, paint);
         return result;
-    }
-
-    public static Bitmap applyBrightness(Bitmap source, float brightness) {
-        Bitmap result = source.copy(Bitmap.Config.ARGB_8888, true);
-        Canvas canvas = new Canvas(result);
-        Paint paint = new Paint();
-        ColorMatrix cm = new ColorMatrix(new float[]{
-            1, 0, 0, 0, brightness,
-            0, 1, 0, 0, brightness,
-            0, 0, 1, 0, brightness,
-            0, 0, 0, 1, 0
-        });
-        paint.setColorFilter(new ColorMatrixColorFilter(cm));
-        canvas.drawBitmap(source, 0, 0, paint);
-        return result;
-    }
-
-    public static Bitmap rotateBitmap(Bitmap source, float degrees) {
-        android.graphics.Matrix matrix = new android.graphics.Matrix();
-        matrix.postRotate(degrees);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-    }
-
-    public static Bitmap cropBitmap(Bitmap source, android.graphics.Rect rect) {
-        int x = Math.max(0, rect.left);
-        int y = Math.max(0, rect.top);
-        int width = Math.min(rect.width(), source.getWidth() - x);
-        int height = Math.min(rect.height(), source.getHeight() - y);
-        if (width <= 0 || height <= 0) return source;
-        return Bitmap.createBitmap(source, x, y, width, height);
     }
 }

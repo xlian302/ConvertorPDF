@@ -2,62 +2,52 @@ package com.convertor.pdf.utils;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.DocumentsContract;
+import android.provider.OpenableColumns;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class FileUtils {
 
-    public static File createPdfFile(Context context, String fileName) {
-        File pdfDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "ConvertorPDF");
-        if (!pdfDir.exists()) pdfDir.mkdirs();
-        String safeName = fileName.replaceAll("[^a-zA-Z0-9_\\-]", "_");
-        if (!safeName.toLowerCase().endsWith(".pdf")) safeName += ".pdf";
-        return new File(pdfDir, safeName);
+    public static File createPdfFile(Context context, String fileName) throws IOException {
+        File dir = new File(context.getExternalFilesDir(null), "PDFs");
+        if (!dir.exists()) dir.mkdirs();
+        String name = fileName.endsWith(".pdf") ? fileName : fileName + ".pdf";
+        File file = new File(dir, name);
+        int counter = 1;
+        while (file.exists()) {
+            String base = fileName.endsWith(".pdf") ? fileName.substring(0, fileName.length() - 4) : fileName;
+            file = new File(dir, base + "_" + counter + ".pdf");
+            counter++;
+        }
+        file.createNewFile();
+        return file;
     }
 
     public static String getFileName(Context context, Uri uri) {
-        String displayName = "document";
-        try {
-            android.database.Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+        String name = "documento";
+        try (var cursor = context.getContentResolver().query(uri, null, null, null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
-                int nameIndex = cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME);
-                if (nameIndex >= 0) displayName = cursor.getString(nameIndex);
-                cursor.close();
+                int idx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                if (idx >= 0) name = cursor.getString(idx);
             }
         } catch (Exception ignored) {}
-        return displayName;
+        if (name == null || name.isEmpty()) name = "documento";
+        return name;
     }
 
-    public static File copyUriToFile(Context context, Uri uri, File dest) throws Exception {
-        try (InputStream is = context.getContentResolver().openInputStream(uri);
-             FileOutputStream os = new FileOutputStream(dest)) {
-            byte[] buffer = new byte[8192];
+    public static File copyUriToCache(Context context, Uri uri, String extension) throws IOException {
+        InputStream is = context.getContentResolver().openInputStream(uri);
+        if (is == null) throw new IOException("No se pudo abrir el archivo");
+        File tmp = File.createTempFile("office_", extension, context.getCacheDir());
+        try (FileOutputStream fos = new FileOutputStream(tmp)) {
+            byte[] buf = new byte[8192];
             int len;
-            while ((len = is.read(buffer)) != -1) os.write(buffer, 0, len);
+            while ((len = is.read(buf)) != -1) fos.write(buf, 0, len);
         }
-        return dest;
-    }
-
-    public static String getMimeType(String fileName) {
-        String lower = fileName.toLowerCase();
-        if (lower.endsWith(".doc") || lower.endsWith(".docx")) return "application/msword";
-        if (lower.endsWith(".xls") || lower.endsWith(".xlsx")) return "application/vnd.ms-excel";
-        if (lower.endsWith(".ppt") || lower.endsWith(".pptx")) return "application/vnd.ms-powerpoint";
-        if (lower.endsWith(".png")) return "image/png";
-        if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "image/jpeg";
-        if (lower.endsWith(".webp")) return "image/webp";
-        if (lower.endsWith(".bmp")) return "image/bmp";
-        return "application/octet-stream";
-    }
-
-    public static String sanitizeFileName(String name) {
-        return name.replaceAll("[\\\\/:*?\"<>|]", "_").trim();
+        is.close();
+        return tmp;
     }
 }
