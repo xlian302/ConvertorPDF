@@ -1,6 +1,6 @@
 {
-  "latestVersionCode": 6,
-  "latestVersionName": "1.5",
-  "downloadUrl": "https://github.com/xlian302/ConvertorPDF/releases/latest/download/ConvertorPDF_v1.5.apk",
-  "changelog": "App completamente renovada: nuevo diseno, PDFs mas ligeros, deteccion de actualizaciones mejorada"
+  "latestVersionCode": 7,
+  "latestVersionName": "1.6",
+  "downloadUrl": "https://github.com/xlian302/ConvertorPDF/releases/latest/download/ConvertorPDF_v1.6.apk",
+  "changelog": "Interfaz renovada: editor de imagenes moderno, selector de archivos mejorado, badge contador, preview redondeada"
 }

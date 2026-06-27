@@ -11,22 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.convertor.pdf.R;
 import com.convertor.pdf.converter.PdfGenerator;
-import com.convertor.pdf.utils.FileUtils;
 import com.convertor.pdf.utils.ImageFilters;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +33,7 @@ public class ImageEditActivity extends AppCompatActivity {
     private RecyclerView recyclerImages;
     private ImageView imagePreview;
     private View layoutEditor;
+    private TextView textImageCount;
     private com.google.android.material.textfield.TextInputEditText etPdfName;
     private com.google.android.material.button.MaterialButton btnCreatePdf, btnAddImages;
     private com.google.android.material.button.MaterialButton btnRotateLeft, btnRotateRight;
@@ -45,9 +43,8 @@ public class ImageEditActivity extends AppCompatActivity {
     private ImageAdapter adapter;
     private List<ImageItem> images = new ArrayList<>();
     private int selectedIndex = -1;
-    private String currentFilter = "original";
 
-    static class ImageItem {
+    public static class ImageItem {
         Uri uri;
         Bitmap originalBitmap;
         Bitmap displayBitmap;
@@ -81,6 +78,7 @@ public class ImageEditActivity extends AppCompatActivity {
                     }
                 }
                 adapter.notifyDataSetChanged();
+                updateImageCount();
                 if (!images.isEmpty() && selectedIndex < 0) selectImage(0);
             }
         });
@@ -93,6 +91,7 @@ public class ImageEditActivity extends AppCompatActivity {
         recyclerImages = findViewById(R.id.recycler_images);
         imagePreview = findViewById(R.id.image_preview);
         layoutEditor = findViewById(R.id.layout_image_editor);
+        textImageCount = findViewById(R.id.text_image_count);
         etPdfName = findViewById(R.id.et_pdf_name);
         btnCreatePdf = findViewById(R.id.btn_create_pdf);
         btnAddImages = findViewById(R.id.btn_add_images);
@@ -118,6 +117,7 @@ public class ImageEditActivity extends AppCompatActivity {
                     adapter.notifyItemMoved(position, position - 1);
                     if (selectedIndex == position) selectedIndex = position - 1;
                     else if (selectedIndex == position - 1) selectedIndex = position;
+                    updateImageCount();
                 }
             }
             @Override public void onMoveDown(int position) {
@@ -128,6 +128,7 @@ public class ImageEditActivity extends AppCompatActivity {
                     adapter.notifyItemMoved(position, position + 1);
                     if (selectedIndex == position) selectedIndex = position + 1;
                     else if (selectedIndex == position + 1) selectedIndex = position;
+                    updateImageCount();
                 }
             }
         });
@@ -163,6 +164,7 @@ public class ImageEditActivity extends AppCompatActivity {
             if (selectedIndex < 0) return;
             images.remove(selectedIndex);
             adapter.notifyItemRemoved(selectedIndex);
+            updateImageCount();
             if (images.isEmpty()) {
                 layoutEditor.setVisibility(View.GONE);
                 selectedIndex = -1;
@@ -170,8 +172,17 @@ public class ImageEditActivity extends AppCompatActivity {
                 selectImage(Math.min(selectedIndex, images.size() - 1));
             }
         });
+    }
 
-        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    private void updateImageCount() {
+        if (textImageCount == null) return;
+        int count = images.size();
+        if (count > 0) {
+            textImageCount.setVisibility(View.VISIBLE);
+            textImageCount.setText(String.valueOf(count));
+        } else {
+            textImageCount.setVisibility(View.GONE);
+        }
     }
 
     private void selectImage(int index) {
@@ -206,7 +217,6 @@ public class ImageEditActivity extends AppCompatActivity {
         if (selectedIndex < 0) return;
         ImageItem item = images.get(selectedIndex);
         item.filter = filter;
-        currentFilter = filter;
         updatePreview(item);
     }
 
@@ -217,15 +227,14 @@ public class ImageEditActivity extends AppCompatActivity {
         ImageView cropImageView = cropView.findViewById(R.id.crop_image_view);
         cropImageView.setImageBitmap(item.originalBitmap);
 
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
             .setTitle("Recortar imagen")
             .setView(cropView)
             .setPositiveButton("Aceptar", (d, which) -> {
-                Toast.makeText(this, "Arrastra para recortar (función básica)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Arrastra para recortar (funcion basica)", Toast.LENGTH_SHORT).show();
             })
             .setNegativeButton("Cancelar", null)
-            .create();
-        dialog.show();
+            .show();
     }
 
     private void createPdf() {

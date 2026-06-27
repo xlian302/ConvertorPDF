@@ -26,7 +26,6 @@ public class PdfGenerator {
 
         for (int i = 0; i < bitmaps.size(); i++) {
             Bitmap bmp = bitmaps.get(i);
-
             bmp = compressBitmap(bmp);
 
             int pageWidth = bmp.getWidth();

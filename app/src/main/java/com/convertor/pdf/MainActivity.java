@@ -25,13 +25,19 @@ public class MainActivity extends AppCompatActivity {
         CardView cardPpt = findViewById(R.id.card_ppt);
 
         View.OnClickListener listener = v -> {
-            Intent intent = new Intent(MainActivity.this, ImageEditActivity.class);
-            if (v == cardWord) intent = new Intent(MainActivity.this, OfficeConvertActivity.class)
-                .putExtra("type", "word");
-            else if (v == cardExcel) intent = new Intent(MainActivity.this, OfficeConvertActivity.class)
-                .putExtra("type", "excel");
-            else if (v == cardPpt) intent = new Intent(MainActivity.this, OfficeConvertActivity.class)
-                .putExtra("type", "ppt");
+            Intent intent;
+            if (v == cardWord) {
+                intent = new Intent(MainActivity.this, OfficeConvertActivity.class)
+                    .putExtra("type", "word");
+            } else if (v == cardExcel) {
+                intent = new Intent(MainActivity.this, OfficeConvertActivity.class)
+                    .putExtra("type", "excel");
+            } else if (v == cardPpt) {
+                intent = new Intent(MainActivity.this, OfficeConvertActivity.class)
+                    .putExtra("type", "ppt");
+            } else {
+                intent = new Intent(MainActivity.this, ImageEditActivity.class);
+            }
             startActivity(intent);
         };
 

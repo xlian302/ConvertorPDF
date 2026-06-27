@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#1A237E</color>
-    <color name="primary_variant">#283593</color>
+    <color name="primary">#1B2838</color>
+    <color name="primary_variant">#243447</color>
     <color name="on_primary">#FFFFFF</color>
-    <color name="secondary">#00897B</color>
-    <color name="secondary_variant">#00BFA5</color>
+    <color name="secondary">#00BCD4</color>
+    <color name="secondary_variant">#26C6DA</color>
     <color name="on_secondary">#FFFFFF</color>
-    <color name="background">#F4F5FA</color>
+    <color name="background">#F0F2F5</color>
     <color name="surface">#FFFFFF</color>
     <color name="on_surface">#1C1B1F</color>
     <color name="error">#D32F2F</color>
@@ -25,6 +25,8 @@
     <color name="card_word_bg">#E3F2FD</color>
     <color name="card_excel_bg">#E8F5E9</color>
     <color name="card_ppt_bg">#FFEBEE</color>
-    <color name="gradient_start">#1A237E</color>
-    <color name="gradient_end">#3949AB</color>
+    <color name="gradient_start">#1B2838</color>
+    <color name="gradient_end">#2C3E50</color>
+    <color name="surface_variant">#F8F9FA</color>
+    <color name="outline">#D1D5DB</color>
 </resources>

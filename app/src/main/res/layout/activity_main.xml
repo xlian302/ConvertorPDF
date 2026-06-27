@@ -9,14 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_gradient"
-        android:elevation="0dp">
+        android:elevation="0dp"
+        android:translationZ="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/app_name"
             android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+            app:title="@string/app_name"
             app:titleTextColor="@color/white"
             app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
@@ -25,6 +26,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -38,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¿Qué deseas convertir?"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 android:textColor="@color/text_primary"
                 android:textStyle="bold"
                 android:layout_marginBottom="4dp" />
@@ -46,15 +48,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Elige el tipo de archivo para convertir a PDF"
+                android:text="Selecciona el tipo de archivo para convertir a PDF"
                 android:textSize="14sp"
                 android:textColor="@color/text_secondary"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="28dp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_images"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginBottom="14dp"
                 app:cardElevation="3dp"
                 app:cardCornerRadius="16dp"
@@ -76,7 +78,7 @@
                     <LinearLayout
                         android:layout_width="52dp"
                         android:layout_height="52dp"
-                        android:layout_margin="14dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center"
                         android:background="@drawable/card_icon_bg_image"
                         android:orientation="vertical">
@@ -85,10 +87,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="IMG"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
-                            android:textColor="@color/card_image"
-                            android:contentDescription="Icono imágenes" />
+                            android:textColor="@color/card_image" />
 
                     </LinearLayout>
 
@@ -96,7 +97,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="14dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -120,7 +122,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="18dp"
                         android:src="@android:drawable/ic_menu_gallery"
                         android:tint="@color/text_secondary"
                         android:contentDescription="Ir" />
@@ -131,7 +133,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_word"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginBottom="14dp"
                 app:cardElevation="3dp"
                 app:cardCornerRadius="16dp"
@@ -153,7 +155,7 @@
                     <LinearLayout
                         android:layout_width="52dp"
                         android:layout_height="52dp"
-                        android:layout_margin="14dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center"
                         android:background="@drawable/card_icon_bg_word"
                         android:orientation="vertical">
@@ -162,10 +164,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="DOC"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
-                            android:textColor="@color/card_word"
-                            android:contentDescription="Icono Word" />
+                            android:textColor="@color/card_word" />
 
                     </LinearLayout>
 
@@ -173,7 +174,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="14dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -197,7 +199,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="18dp"
                         android:src="@android:drawable/ic_menu_gallery"
                         android:tint="@color/text_secondary"
                         android:contentDescription="Ir" />
@@ -208,7 +210,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_excel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginBottom="14dp"
                 app:cardElevation="3dp"
                 app:cardCornerRadius="16dp"
@@ -230,7 +232,7 @@
                     <LinearLayout
                         android:layout_width="52dp"
                         android:layout_height="52dp"
-                        android:layout_margin="14dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center"
                         android:background="@drawable/card_icon_bg_excel"
                         android:orientation="vertical">
@@ -239,10 +241,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="XLS"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
-                            android:textColor="@color/card_excel"
-                            android:contentDescription="Icono Excel" />
+                            android:textColor="@color/card_excel" />
 
                     </LinearLayout>
 
@@ -250,7 +251,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="14dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -264,7 +266,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hojas de cálculo .xls y .xlsx"
+                            android:text="Hojas de calculo .xls y .xlsx"
                             android:textSize="13sp"
                             android:textColor="@color/text_secondary"
                             android:layout_marginTop="2dp" />
@@ -274,7 +276,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="18dp"
                         android:src="@android:drawable/ic_menu_gallery"
                         android:tint="@color/text_secondary"
                         android:contentDescription="Ir" />
@@ -285,7 +287,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_ppt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 app:cardElevation="3dp"
                 app:cardCornerRadius="16dp"
                 android:clickable="true"
@@ -306,7 +308,7 @@
                     <LinearLayout
                         android:layout_width="52dp"
                         android:layout_height="52dp"
-                        android:layout_margin="14dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center"
                         android:background="@drawable/card_icon_bg_ppt"
                         android:orientation="vertical">
@@ -315,10 +317,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="PPT"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
-                            android:textColor="@color/card_ppt"
-                            android:contentDescription="Icono PowerPoint" />
+                            android:textColor="@color/card_ppt" />
 
                     </LinearLayout>
 
@@ -326,7 +327,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginEnd="14dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical">
 
                         <TextView
@@ -350,7 +352,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="18dp"
                         android:src="@android:drawable/ic_menu_gallery"
                         android:tint="@color/text_secondary"
                         android:contentDescription="Ir" />
@@ -361,14 +363,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Las conversiones se procesan localmente en tu dispositivo"
+                android:text="Tus archivos se procesan localmente en tu dispositivo. No se envian a servidores externos."
                 android:textSize="12sp"
                 android:textColor="@color/text_secondary"
                 android:gravity="center"
                 android:layout_marginTop="28dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginBottom="12dp"
+                android:lineSpacingExtra="4sp" />
 
         </LinearLayout>
     </ScrollView>
