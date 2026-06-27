@@ -1,6 +1,6 @@
 ﻿{
-  "latestVersionCode": 4,
-  "latestVersionName": "1.3",
-  "downloadUrl": "https://github.com/xlian302/ConvertorPDF/releases/latest/download/ConvertorPDF_v1.3.apk",
-  "changelog": "Diseño renovado y PDFs más ligeros"
+    "latestVersionCode":  5,
+    "downloadUrl":  "https://github.com/xlian302/ConvertorPDF/releases/latest/download/ConvertorPDF_v1.4.apk",
+    "latestVersionName":  "1.4",
+    "changelog":  "Corregida detección de actualizaciones en Android moderno"
 }
