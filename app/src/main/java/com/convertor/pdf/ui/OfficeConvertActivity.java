@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.convertor.pdf.R;
 import com.convertor.pdf.converter.OfficeConverter;
@@ -49,6 +50,8 @@ public class OfficeConvertActivity extends AppCompatActivity {
         if (type == null) type = "word";
 
         toolbarTitle = findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
         btnSelectFile = findViewById(R.id.btn_select_file);
         btnConvert = findViewById(R.id.btn_convert);
         etPdfName = findViewById(R.id.et_pdf_name);

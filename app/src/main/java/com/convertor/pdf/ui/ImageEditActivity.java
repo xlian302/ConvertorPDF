@@ -6,11 +6,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -104,7 +105,8 @@ public class ImageEditActivity extends AppCompatActivity {
         btnCrop = findViewById(R.id.btn_crop);
         btnDeleteImage = findViewById(R.id.btn_delete_image);
 
-        findViewById(R.id.toolbar).setOnClickListener(v -> finish());
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         adapter = new ImageAdapter(images, new ImageAdapter.Callbacks() {
             @Override public void onItemClick(int position) { selectImage(position); }

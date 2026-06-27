@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#1565C0</color>
-    <color name="primary_variant">#0D47A1</color>
+    <color name="primary">#1A237E</color>
+    <color name="primary_variant">#283593</color>
     <color name="on_primary">#FFFFFF</color>
-    <color name="secondary">#FF6F00</color>
-    <color name="secondary_variant">#E65100</color>
+    <color name="secondary">#00897B</color>
+    <color name="secondary_variant">#00BFA5</color>
     <color name="on_secondary">#FFFFFF</color>
-    <color name="background">#F5F5F5</color>
+    <color name="background">#F4F5FA</color>
     <color name="surface">#FFFFFF</color>
-    <color name="on_surface">#212121</color>
+    <color name="on_surface">#1C1B1F</color>
     <color name="error">#D32F2F</color>
     <color name="on_error">#FFFFFF</color>
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#757575</color>
-    <color name="divider">#BDBDBD</color>
+    <color name="text_primary">#1C1B1F</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="divider">#E5E7EB</color>
     <color name="overlay">#80000000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="card_image">#F57C00</color>
+    <color name="card_word">#1565C0</color>
+    <color name="card_excel">#2E7D32</color>
+    <color name="card_ppt">#C62828</color>
+    <color name="card_image_bg">#FFF3E0</color>
+    <color name="card_word_bg">#E3F2FD</color>
+    <color name="card_excel_bg">#E8F5E9</color>
+    <color name="card_ppt_bg">#FFEBEE</color>
+    <color name="gradient_start">#1A237E</color>
+    <color name="gradient_end">#3949AB</color>
 </resources>

@@ -2,12 +2,14 @@ package com.convertor.pdf.converter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 
 import com.convertor.pdf.utils.FileUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,17 +17,23 @@ import java.util.List;
 
 public class PdfGenerator {
 
+    private static final int MAX_DIMENSION = 1024;
+    private static final int COMPRESS_QUALITY = 50;
+
     public static File generateFromBitmaps(Context context, List<Bitmap> bitmaps, String fileName) throws IOException {
         File pdfFile = FileUtils.createPdfFile(context, fileName);
         PdfDocument document = new PdfDocument();
 
         for (int i = 0; i < bitmaps.size(); i++) {
             Bitmap bmp = bitmaps.get(i);
+
+            bmp = compressBitmap(bmp);
+
             int pageWidth = bmp.getWidth();
             int pageHeight = bmp.getHeight();
 
-            if (pageWidth > 2400 || pageHeight > 2400) {
-                float scale = Math.min(2400f / pageWidth, 2400f / pageHeight);
+            if (pageWidth > MAX_DIMENSION || pageHeight > MAX_DIMENSION) {
+                float scale = Math.min((float) MAX_DIMENSION / pageWidth, (float) MAX_DIMENSION / pageHeight);
                 pageWidth = (int) (pageWidth * scale);
                 pageHeight = (int) (pageHeight * scale);
                 bmp = Bitmap.createScaledBitmap(bmp, pageWidth, pageHeight, true);
@@ -45,6 +53,15 @@ public class PdfGenerator {
         }
 
         return pdfFile;
+    }
+
+    private static Bitmap compressBitmap(Bitmap original) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        original.compress(Bitmap.CompressFormat.JPEG, COMPRESS_QUALITY, baos);
+        byte[] compressed = baos.toByteArray();
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inPreferredConfig = Bitmap.Config.RGB_565;
+        return BitmapFactory.decodeByteArray(compressed, 0, compressed.length, opts);
     }
 
     public static File generateFromText(Context context, String text, String fileName) throws IOException {
